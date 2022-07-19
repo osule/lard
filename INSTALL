@@ -1,0 +1,4 @@
+Please use
+ python setup.py install
+
+and report errors in the [Issues tracker](https://github.com/osule/lard)
