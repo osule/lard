@@ -1,13 +1,14 @@
 # LARD
 
-> Dictionary definition
->  insert strips of fat or bacon in (meat) before cooking.
+> **Dictionary definition**
+
+> insert strips of fat or bacon in (meat) before cooking.
 
 Lard provides the capability to load data into Airflow in an idempotent manner.
 
 ## How it works
 
-LARD watermarks loads the data in the following sequence:
+LARD watermarks the loaded data in the following sequence:
 
 * deletes records with the given watermark existing in the target table.
 * loads data into a temporary staging table.
@@ -24,7 +25,7 @@ LARD watermarks loads the data in the following sequence:
 
 # Usage
 
-The following is an example of a load operation of data from an S3 bucket location to the `events` table of the `lards` schema in the Redshift database.
+The following is an example of a load operation of data from an S3 bucket location to the `events` table of the `sample` schema in the Redshift database.
 
 ```python
 import lard
@@ -47,7 +48,6 @@ lard_task = lard.LoadOperator(
     ),
     watermark=dict(
         target_name='scheduled_at',
-        data_type='TIMESTAMP',
         source_value='{{ data_interval_end | ts }}'
     )
 )
