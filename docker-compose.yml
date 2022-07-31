@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_USER=airflow
+      - POSTGRES_DB=airflow
+
+  init-db:
+    image: apache/airflow:2.3.3
+    command: db upgrade
+    volumes:
+      - ./:/opt/airflow
+    depends_on:
+      db:
+        condition: service_started
+  
+  worker:
+    image: apache/airflow:2.3.3
+    command: celery worker
+    volumes:
+      - ./:/opt/airflow
+    depends_on:
+      init-db:
+        condition: service_completed_successfully
+
+  scheduler:
+    image: apache/airflow:2.3.3
+    command: scheduler
+    volumes:
+      - ./:/opt/airflow
+    depends_on:
+      init-db:
+        condition: service_completed_successfully
+  

@@ -1,2 +1,11 @@
 *.py[c]
 dist
+*.egg-info
+__pycache__
+.pytest_cache
+.vscode
+.env
+logs
+webserver_config.py
+*.db
+*.pid
